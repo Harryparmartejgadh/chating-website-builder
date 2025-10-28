@@ -171,8 +171,9 @@ const Index = () => {
             <Button 
               size="lg" 
               className="bg-gradient-primary hover:opacity-90 text-primary-foreground shadow-glow-primary text-lg px-8"
+              onClick={() => window.location.href = '/chat'}
             >
-              Explore Features
+              Start Chatting with Dwiju
             </Button>
             <Button 
               size="lg" 
@@ -242,22 +243,25 @@ const Index = () => {
             <div className="space-y-6 text-center">
               <div>
                 <h3 className="text-xl font-semibold mb-2 text-primary">School Name</h3>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-lg text-muted-foreground font-semibold">
                   BHILODIYA PRIMARY SCHOOL
                 </p>
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-semibold mb-2 text-secondary">Project Guide</h3>
-                <p className="text-lg text-muted-foreground">
-                  [Teacher Name]
+                <p className="text-sm text-muted-foreground mt-1">
+                  TA. DABHOI, DIST. VADODARA, GUJARAT
                 </p>
               </div>
               
               <div>
-                <h3 className="text-xl font-semibold mb-2 text-accent">Student Developer</h3>
+                <h3 className="text-xl font-semibold mb-2 text-secondary">માર્ગદર્શક શિક્ષક</h3>
                 <p className="text-lg text-muted-foreground">
-                  [Student Name]
+                  શ્રી પરમાર હરિશકુમાર રણછોડભાઈ
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-semibold mb-2 text-accent">Project Type</h3>
+                <p className="text-lg text-muted-foreground">
+                  AI Humanoid Robot with 1950+ Features
                 </p>
               </div>
               
