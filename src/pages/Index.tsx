@@ -243,7 +243,7 @@ const Index = () => {
               <div>
                 <h3 className="text-xl font-semibold mb-2 text-primary">School Name</h3>
                 <p className="text-lg text-muted-foreground">
-                  [Your School Name Here]
+                  BHILODIYA PRIMARY SCHOOL
                 </p>
               </div>
               
