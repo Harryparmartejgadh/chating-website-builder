@@ -2,14 +2,17 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { 
-  MessageSquare, Search, Youtube, Music, Bot, Video, 
-  Mic, Brain, Image, Settings, Home, GraduationCap
+  Search, Youtube, Music, Bot, Video, 
+  Mic, Brain, Image, Home, GraduationCap
 } from "lucide-react";
 import { DwijuLive } from "./DwijuLive";
 import { DwijuSearch } from "./DwijuSearch";
 import { DwijuTube } from "./DwijuTube";
 import { DwijuMusic } from "./DwijuMusic";
 import { DwijuEducation } from "./DwijuEducation";
+import { DwijuVision } from "./DwijuVision";
+import { DwijuVoice } from "./DwijuVoice";
+import { DwijuBrain } from "./DwijuBrain";
 
 const tabs = [
   { id: "live", label: "Dwiju Live", icon: Video, color: "from-green-500 to-emerald-500" },
@@ -32,20 +35,20 @@ export const ChatInterface = () => {
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center animate-pulse">
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-innovation bg-clip-text text-transparent">
                   Dwiju AI Interface
                 </h1>
-                <p className="text-xs text-muted-foreground">1950+ AI Features</p>
+                <p className="text-xs text-muted-foreground">1950+ AI Features • All Tabs Active</p>
               </div>
             </div>
             
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-green-500 border-green-500/30">
-                ● Connected
+              <Badge variant="outline" className="text-green-500 border-green-500/30 animate-pulse">
+                ● Live
               </Badge>
               <a href="/" className="p-2 hover:bg-muted rounded-lg transition-colors">
                 <Home className="w-5 h-5" />
@@ -66,7 +69,7 @@ export const ChatInterface = () => {
                 <TabsTrigger
                   key={tab.id}
                   value={tab.id}
-                  className="flex items-center gap-2 px-4 py-2.5 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white whitespace-nowrap"
+                  className="flex items-center gap-2 px-4 py-2.5 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white whitespace-nowrap transition-all duration-300"
                 >
                   <Icon className="w-4 h-4" />
                   <span className="hidden sm:inline">{tab.label}</span>
@@ -98,42 +101,15 @@ export const ChatInterface = () => {
             </TabsContent>
 
             <TabsContent value="vision" className="h-full m-0">
-              <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center mb-4">
-                  <Image className="w-10 h-10 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold mb-2">Dwiju Vision</h2>
-                <p className="text-muted-foreground mb-4">
-                  Image recognition, object detection, and visual AI
-                </p>
-                <Badge>Coming Soon</Badge>
-              </div>
+              <DwijuVision />
             </TabsContent>
 
             <TabsContent value="voice" className="h-full m-0">
-              <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-teal-500 to-green-500 flex items-center justify-center mb-4">
-                  <Mic className="w-10 h-10 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold mb-2">Dwiju Voice</h2>
-                <p className="text-muted-foreground mb-4">
-                  Voice cloning, text-to-speech, and audio processing
-                </p>
-                <Badge>Coming Soon</Badge>
-              </div>
+              <DwijuVoice />
             </TabsContent>
 
             <TabsContent value="brain" className="h-full m-0">
-              <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mb-4">
-                  <Brain className="w-10 h-10 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold mb-2">Dwiju Brain</h2>
-                <p className="text-muted-foreground mb-4">
-                  Advanced reasoning, problem-solving, and learning
-                </p>
-                <Badge>Coming Soon</Badge>
-              </div>
+              <DwijuBrain />
             </TabsContent>
           </div>
         </Tabs>
