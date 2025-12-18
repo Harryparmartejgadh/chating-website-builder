@@ -1,195 +1,136 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { MessageSquare, Mic, Video, Type, Headphones, Eye, Zap } from "lucide-react";
-import { toast } from "sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { 
+  MessageSquare, Search, Youtube, Music, Bot, Video, 
+  Mic, Brain, Image, Settings, Home
+} from "lucide-react";
+import { DwijuLive } from "./DwijuLive";
+import { DwijuSearch } from "./DwijuSearch";
+import { DwijuTube } from "./DwijuTube";
+import { DwijuMusic } from "./DwijuMusic";
 
-type ChatMode = "text" | "voice" | "vision" | "text-voice" | "voice-vision" | "all";
+const tabs = [
+  { id: "live", label: "Dwiju Live", icon: Video, color: "from-green-500 to-emerald-500" },
+  { id: "search", label: "Dwiju Search", icon: Search, color: "from-blue-500 to-cyan-500" },
+  { id: "tube", label: "Dwiju Tube", icon: Youtube, color: "from-red-500 to-red-600" },
+  { id: "music", label: "Dwiju Music", icon: Music, color: "from-purple-500 to-pink-500" },
+  { id: "vision", label: "Dwiju Vision", icon: Image, color: "from-orange-500 to-yellow-500" },
+  { id: "voice", label: "Dwiju Voice", icon: Mic, color: "from-teal-500 to-green-500" },
+  { id: "brain", label: "Dwiju Brain", icon: Brain, color: "from-indigo-500 to-purple-500" },
+];
 
 export const ChatInterface = () => {
-  const [mode, setMode] = useState<ChatMode | null>(null);
-  const [message, setMessage] = useState("");
-  const [isRecording, setIsRecording] = useState(false);
-
-  const modes = [
-    { 
-      id: "text" as ChatMode, 
-      icon: Type, 
-      label: "Text Chat", 
-      desc: "Type your message",
-      color: "from-blue-500 to-blue-600"
-    },
-    { 
-      id: "voice" as ChatMode, 
-      icon: Mic, 
-      label: "Voice Chat", 
-      desc: "Speak to Dwiju",
-      color: "from-green-500 to-green-600"
-    },
-    { 
-      id: "vision" as ChatMode, 
-      icon: Eye, 
-      label: "Vision Mode", 
-      desc: "Show to Dwiju",
-      color: "from-purple-500 to-purple-600"
-    },
-    { 
-      id: "text-voice" as ChatMode, 
-      icon: Headphones, 
-      label: "Text + Voice", 
-      desc: "Type & Listen",
-      color: "from-orange-500 to-orange-600"
-    },
-    { 
-      id: "voice-vision" as ChatMode, 
-      icon: Video, 
-      label: "Voice + Vision", 
-      desc: "Speak & Show",
-      color: "from-pink-500 to-pink-600"
-    },
-    { 
-      id: "all" as ChatMode, 
-      icon: Zap, 
-      label: "Complete Mode", 
-      desc: "All Features",
-      color: "from-gradient-start to-gradient-end"
-    },
-  ];
-
-  const handleModeSelect = (selectedMode: ChatMode) => {
-    setMode(selectedMode);
-    toast.success(`${modes.find(m => m.id === selectedMode)?.label} activated`);
-  };
-
-  const handleSendMessage = () => {
-    if (!message.trim()) return;
-    toast.info("Message sent to Dwiju!");
-    setMessage("");
-  };
-
-  const toggleRecording = () => {
-    setIsRecording(!isRecording);
-    toast.info(isRecording ? "Recording stopped" : "Recording started");
-  };
+  const [activeTab, setActiveTab] = useState("live");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-accent/5 py-20 px-4">
-      <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-innovation bg-clip-text text-transparent">
-            Dwiju Chat Interface
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Select your preferred interaction mode
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-accent/5">
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                <Bot className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-innovation bg-clip-text text-transparent">
+                  Dwiju AI Interface
+                </h1>
+                <p className="text-xs text-muted-foreground">1950+ AI Features</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="text-green-500 border-green-500/30">
+                ● Connected
+              </Badge>
+              <a href="/" className="p-2 hover:bg-muted rounded-lg transition-colors">
+                <Home className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
         </div>
+      </div>
 
-        {!mode ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {modes.map((m) => {
-              const Icon = m.icon;
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="h-[calc(100vh-120px)]">
+          {/* Tab List */}
+          <TabsList className="w-full justify-start overflow-x-auto flex-nowrap bg-card/50 backdrop-blur-sm p-1 h-auto mb-4">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
               return (
-                <Card
-                  key={m.id}
-                  onClick={() => handleModeSelect(m.id)}
-                  className="group relative overflow-hidden bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 cursor-pointer hover:scale-105"
+                <TabsTrigger
+                  key={tab.id}
+                  value={tab.id}
+                  className="flex items-center gap-2 px-4 py-2.5 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white whitespace-nowrap"
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${m.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                  
-                  <div className="p-8 relative z-10">
-                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${m.color} flex items-center justify-center mb-4 mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
-                    
-                    <h3 className="text-xl font-bold mb-2 text-center group-hover:text-primary transition-colors">
-                      {m.label}
-                    </h3>
-                    
-                    <p className="text-sm text-muted-foreground text-center">
-                      {m.desc}
-                    </p>
-                  </div>
-                </Card>
+                  <Icon className="w-4 h-4" />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                </TabsTrigger>
               );
             })}
-          </div>
-        ) : (
-          <Card className="p-8 bg-card/50 backdrop-blur-sm border-primary/20">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold">
-                {modes.find(m => m.id === mode)?.label}
-              </h2>
-              <Button onClick={() => setMode(null)} variant="outline">
-                Change Mode
-              </Button>
-            </div>
+          </TabsList>
 
-            <div className="space-y-6">
-              {/* Chat Area */}
-              <div className="min-h-[300px] bg-background/50 rounded-lg p-4 border border-border">
-                <p className="text-muted-foreground text-center py-8">
-                  Chat messages will appear here...
+          {/* Tab Contents */}
+          <div className="h-[calc(100%-60px)] bg-card/30 backdrop-blur-sm rounded-xl border border-border/50 overflow-hidden">
+            <TabsContent value="live" className="h-full m-0">
+              <DwijuLive />
+            </TabsContent>
+
+            <TabsContent value="search" className="h-full m-0">
+              <DwijuSearch />
+            </TabsContent>
+
+            <TabsContent value="tube" className="h-full m-0">
+              <DwijuTube />
+            </TabsContent>
+
+            <TabsContent value="music" className="h-full m-0">
+              <DwijuMusic />
+            </TabsContent>
+
+            <TabsContent value="vision" className="h-full m-0">
+              <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center mb-4">
+                  <Image className="w-10 h-10 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold mb-2">Dwiju Vision</h2>
+                <p className="text-muted-foreground mb-4">
+                  Image recognition, object detection, and visual AI
                 </p>
+                <Badge>Coming Soon</Badge>
               </div>
+            </TabsContent>
 
-              {/* Input Controls */}
-              <div className="space-y-4">
-                {(mode === "text" || mode === "text-voice" || mode === "all") && (
-                  <div className="flex gap-2">
-                    <Input
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Type your message..."
-                      onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                      className="flex-1"
-                    />
-                    <Button onClick={handleSendMessage}>
-                      <MessageSquare className="w-4 h-4 mr-2" />
-                      Send
-                    </Button>
-                  </div>
-                )}
-
-                {(mode === "voice" || mode === "text-voice" || mode === "voice-vision" || mode === "all") && (
-                  <Button
-                    onClick={toggleRecording}
-                    className={`w-full ${isRecording ? "bg-red-500 hover:bg-red-600" : ""}`}
-                  >
-                    <Mic className="w-4 h-4 mr-2" />
-                    {isRecording ? "Stop Recording" : "Start Voice Input"}
-                  </Button>
-                )}
-
-                {(mode === "vision" || mode === "voice-vision" || mode === "all") && (
-                  <Button className="w-full" variant="outline">
-                    <Video className="w-4 h-4 mr-2" />
-                    Start Camera / Upload Image
-                  </Button>
-                )}
+            <TabsContent value="voice" className="h-full m-0">
+              <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-teal-500 to-green-500 flex items-center justify-center mb-4">
+                  <Mic className="w-10 h-10 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold mb-2">Dwiju Voice</h2>
+                <p className="text-muted-foreground mb-4">
+                  Voice cloning, text-to-speech, and audio processing
+                </p>
+                <Badge>Coming Soon</Badge>
               </div>
-            </div>
-          </Card>
-        )}
+            </TabsContent>
 
-        {/* Hardware Control Panel */}
-        <Card className="mt-8 p-6 bg-card/50 backdrop-blur-sm border-innovation/20">
-          <h3 className="text-xl font-bold mb-4">Hardware Controls</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-20">
-              Servo Motors
-            </Button>
-            <Button variant="outline" className="h-20">
-              Sensors
-            </Button>
-            <Button variant="outline" className="h-20">
-              Camera
-            </Button>
-            <Button variant="outline" className="h-20">
-              Movement
-            </Button>
+            <TabsContent value="brain" className="h-full m-0">
+              <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mb-4">
+                  <Brain className="w-10 h-10 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold mb-2">Dwiju Brain</h2>
+                <p className="text-muted-foreground mb-4">
+                  Advanced reasoning, problem-solving, and learning
+                </p>
+                <Badge>Coming Soon</Badge>
+              </div>
+            </TabsContent>
           </div>
-        </Card>
+        </Tabs>
       </div>
     </div>
   );
