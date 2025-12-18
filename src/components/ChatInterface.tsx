@@ -3,15 +3,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { 
   MessageSquare, Search, Youtube, Music, Bot, Video, 
-  Mic, Brain, Image, Settings, Home
+  Mic, Brain, Image, Settings, Home, GraduationCap
 } from "lucide-react";
 import { DwijuLive } from "./DwijuLive";
 import { DwijuSearch } from "./DwijuSearch";
 import { DwijuTube } from "./DwijuTube";
 import { DwijuMusic } from "./DwijuMusic";
+import { DwijuEducation } from "./DwijuEducation";
 
 const tabs = [
   { id: "live", label: "Dwiju Live", icon: Video, color: "from-green-500 to-emerald-500" },
+  { id: "education", label: "Dwiju Education", icon: GraduationCap, color: "from-emerald-500 to-teal-500" },
   { id: "search", label: "Dwiju Search", icon: Search, color: "from-blue-500 to-cyan-500" },
   { id: "tube", label: "Dwiju Tube", icon: Youtube, color: "from-red-500 to-red-600" },
   { id: "music", label: "Dwiju Music", icon: Music, color: "from-purple-500 to-pink-500" },
@@ -77,6 +79,10 @@ export const ChatInterface = () => {
           <div className="h-[calc(100%-60px)] bg-card/30 backdrop-blur-sm rounded-xl border border-border/50 overflow-hidden">
             <TabsContent value="live" className="h-full m-0">
               <DwijuLive />
+            </TabsContent>
+
+            <TabsContent value="education" className="h-full m-0">
+              <DwijuEducation />
             </TabsContent>
 
             <TabsContent value="search" className="h-full m-0">
